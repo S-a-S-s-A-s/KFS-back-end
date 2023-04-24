@@ -94,7 +94,7 @@ type RoleRes struct {
 // 得到临时token
 func TokensTem(name, password string) (string, string) {
 	request := gorequest.New()
-	resp, body, errs := request.Post("http://192.168.10.110:5000/v3/auth/tokens").
+	resp, body, errs := request.Post(KeystoneIp + "/v3/auth/tokens").
 		Send(`{
     "auth": {
         "identity": {
@@ -127,7 +127,7 @@ func TokensTem(name, password string) (string, string) {
 // 获取用户的项目
 func GetProjects(token string) []Project {
 	request := gorequest.New()
-	_, body, errs := request.Get("http://192.168.10.110:5000/v3/auth/projects").
+	_, body, errs := request.Get(KeystoneIp+"/v3/auth/projects").
 		Set("X-Auth-Token", token).End()
 	if errs != nil {
 		log.Fatal(errs)
@@ -149,7 +149,7 @@ func GetProjects(token string) []Project {
 // 获得某个用户在某个项目的角色
 func GetRole(projectId string, token string) string {
 	request := gorequest.New()
-	_, body, errs := request.Post("http://192.168.10.110:5000/v3/auth/tokens").
+	_, body, errs := request.Post(KeystoneIp + "/v3/auth/tokens").
 		Send(`{
     "auth": {
         "identity": {
